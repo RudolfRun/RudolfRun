@@ -3,7 +3,16 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - LittleStar
+  - MiddleStar
+  - BigStar
+  - TriJelly
+  - Thorn
+  - SnowBall
+  - PlayerCanvas
+  - HourGlass
+  - Boundary
   layers:
   - Default
   - TransparentFX
