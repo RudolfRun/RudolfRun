@@ -1,3 +1,1 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:ec13fb9ba4321a11e7f078027fd98590aa243592407ad643b6fb8660a8484df9
-size 11
+![루돌프런화면](https://github.com/ongheong/RudolfRun/assets/87983309/0a58163d-488d-4d1b-93f8-39ee32be0278)
