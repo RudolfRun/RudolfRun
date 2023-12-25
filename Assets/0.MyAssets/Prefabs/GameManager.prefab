@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb61b390ed0a4db5a751daca1e6460a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lobbyObjects: {fileID: 0}
+  expBarImage: {fileID: 0}
+  testExp: 0
+  LobbyCanvas: {fileID: 0}
+  GameOverCanvas: {fileID: 0}
+  GameWinCanvas: {fileID: 0}
+  Trackbg: {fileID: 0}

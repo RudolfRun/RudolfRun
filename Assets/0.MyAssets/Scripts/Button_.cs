@@ -10,8 +10,12 @@ public class Button_ : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         Dolf = GameObject.Find("dolf");
-        control = Dolf.GetComponent<Control>();
+        if (Dolf != null)
+        {
+            control = Dolf.GetComponent<Control>();
+        }
     }
 
     // Update is called once per frame
@@ -20,20 +24,20 @@ public class Button_ : MonoBehaviour
 
     }
 
-        public void LeftBtnDown()
-        {
-            control.LeftMove=true;
-        }
-        public void LeftBtnUp()
-        {
-            control.LeftMove=false;
-        }
-        public void RightBtnUp()
-        {
-            control.RightMove=true;
-        }
-        public void RightBtnDown()
-        {
-            control.RightMove=false;
-        }
+    public void LeftBtnDown()
+    {
+        control.LeftMove=true;
+    }
+    public void LeftBtnUp()
+    {
+        control.LeftMove=false;
+    }
+    public void RightBtnUp()
+    {
+        control.RightMove=true;
+    }
+    public void RightBtnDown()
+    {
+        control.RightMove=false;
+    }
 }

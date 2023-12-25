@@ -18,8 +18,16 @@ public class GameManager : MonoBehaviour
 
     public Image expBarImage;
     public float testExp;
-
+    public GameObject EnterCanvas;
+    public GameObject LobbyCanvas;
     public GameObject GameOverCanvas;
+    public GameObject GameWinCanvas;
+    public GameObject Trackbg;
+    public GameObject Dolf;
+    public GameObject Spawner;
+
+    bool isWin;
+    bool isLose;
 
     private void Awake()
     {
@@ -33,7 +41,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(BlackPannel.instance.FadeOut());
+
+        EnterCanvas.SetActive(true);
         GameOverCanvas.SetActive(false);
+        LobbyCanvas.SetActive(false);
+        GameWinCanvas.SetActive(false);
+        Trackbg.SetActive(false);
+        Dolf.SetActive(false);
+        Spawner.SetActive(false);
+
+        isWin = false;
+        isLose = false;
 
         Exp = 0;
         Level = -1;
@@ -55,24 +74,31 @@ public class GameManager : MonoBehaviour
             UpdateExp(testExp);
             testExp = 0;
         }
-
-        if (Level >= 0) SetLobbyObject(Level);
-        
     }
 
     private void FixedUpdate()
     {
-        playTime -= Time.deltaTime;
-        if (playTime <= 0) EndGame();
+        if (LobbyCanvas.activeSelf) {
+            playTime -= Time.deltaTime;
+            if (Level >= 0) SetLobbyObject(Level);
+            if (playTime <= 0 && !isLose) {
+                isLose = true;
+                StartCoroutine(EndGame());
+            }
+
+        }
     }
 
     public void SetLobbyObject(int level)
     {
-        if (level == 12) {
-            WinGame();
+        if (level == 12 && !isWin) {
+            Debug.Log("Win");
+            StartCoroutine(WinGame());
+            isWin = true;
             return;
         }
-        lobbyObjectArr[level].SetActive(true);
+        if (level < 12)
+            lobbyObjectArr[level].SetActive(true);
     }
 
     public void SetExp(float exp)
@@ -99,20 +125,46 @@ public class GameManager : MonoBehaviour
     public void UpdateTime(float time)
     {
         playTime += time;
-        if (playTime < 0) {
-            EndGame();
-        }
     }
 
-    public void EndGame() {
-        Debug.Log("게임오버");
-        // Application.Quit();
+    //씬 이동 함수
+    public void OnClickStartGame() {
+        StartCoroutine(StartGame());
+    }
+
+    public IEnumerator StartGame() {
+        yield return StartCoroutine(BlackPannel.instance.FadeIn());
+        EnterCanvas.SetActive(false);
+        LobbyCanvas.SetActive(true);
+        Trackbg.SetActive(true);
+        Dolf.SetActive(true);
+        Spawner.SetActive(true);
+        yield return StartCoroutine(BlackPannel.instance.FadeOut());
+    }
+
+    public IEnumerator EndGame() {
+        yield return StartCoroutine(BlackPannel.instance.FadeIn());
+        LobbyCanvas.SetActive(false);
+        Trackbg.SetActive(false);
+        Dolf.SetActive(false);
+        Spawner.SetActive(false);
         GameOverCanvas.SetActive(true);
-        // SceneManager.LoadScene("GameOverScene");
+        yield return StartCoroutine(BlackPannel.instance.FadeOut());
     }
 
-    public void WinGame() {
-        SceneManager.LoadScene("2.Win");
+    public IEnumerator WinGame() {
+        yield return StartCoroutine(BlackPannel.instance.FadeIn());
+        Debug.Log("WinGame");
+        LobbyCanvas.SetActive(false);
+        Dolf.SetActive(false);
+        Spawner.SetActive(false);
+        GameWinCanvas.SetActive(true);
+        yield return StartCoroutine(BlackPannel.instance.FadeOut());
     }
 
+    public IEnumerator ReStart() {
+        yield return StartCoroutine(BlackPannel.instance.FadeIn());
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
 }
